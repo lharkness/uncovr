@@ -10,10 +10,7 @@ public class App {
     
     /**
      * Usage: java App "text to modify" rotationFactor
-<<<<<<< HEAD
      * @param args the command line arguments
-=======
->>>>>>> 8921bd37cab9063ec103c365a8b78495f622b777
      */
     public static void main( String[] args ) {
         String inputText = App.DEFAULT_PLAINTEXT;
