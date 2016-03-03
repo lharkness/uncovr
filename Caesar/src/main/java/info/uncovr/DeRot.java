@@ -40,7 +40,7 @@ public class DeRot {
         int bestFitFactor = 0;
         String bestPlaintext = "";
         // start with Rot(-1) and go to Rot(-13)
-        for (int i = -1; i >= -13; i--) {
+        for (int i = -1; i > -26; i--) {
             
             String plaintext = Rot.modify(ciphertext, i);
             int fit = determineFitFor(plaintext, englishWords.get());
