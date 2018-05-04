@@ -1,6 +1,7 @@
 package info.uncovr;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,12 +33,10 @@ public class EnigmaApp
         Spindle mySpindle = new Spindle();
         mySpindle.addRotor(firstRotor);
         mySpindle.addRotor(secondRotor);
-        
-        EnigmaSettings settings = new EnigmaSettings(
+
+        return new EnigmaSettings(
             new Plugboard(), mySpindle
         );
-        
-        return settings;
         
     }
 }

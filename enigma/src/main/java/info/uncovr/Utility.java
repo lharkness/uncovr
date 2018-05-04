@@ -8,7 +8,7 @@ public class Utility {
     
     public static List<Character> shuffle(List<Character> inputList) {
         int halfwayPoint = inputList.size() / 2;
-        List<Integer> indexList = new LinkedList<Integer>();
+        List<Integer> indexList = new LinkedList<>();
         for(int i = halfwayPoint; i < inputList.size(); i++) {
             indexList.add(i);
         }

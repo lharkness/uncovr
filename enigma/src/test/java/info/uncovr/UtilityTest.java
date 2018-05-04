@@ -1,14 +1,9 @@
 package info.uncovr;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Test;
-import org.junit.Before;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
+import java.util.Arrays;
+import java.util.List;
 
 public class UtilityTest {
     

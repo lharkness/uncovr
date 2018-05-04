@@ -1,19 +1,14 @@
 package info.uncovr;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.Before;
-
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.Mock;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 public class SpindleTest {
     

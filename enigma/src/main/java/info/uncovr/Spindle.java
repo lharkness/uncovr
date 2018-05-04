@@ -15,6 +15,7 @@ public class Spindle {
     }
     
     public Spindle addRotor(Rotor rotor) {
+        rotor.setRotorIndex(this.rotors.size());
         this.rotors.add(rotor);
         return this;
     }

@@ -32,8 +32,7 @@ public class Plugboard {
     public static class LetterPair {
         private char firstEntry;
         private char secondEntry;
-        
-        public LetterPair() {}
+
         public LetterPair(char firstEntry, char secondEntry) {
             this.firstEntry = firstEntry;
             this.secondEntry = secondEntry;

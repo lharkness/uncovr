@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Collections;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Rotor {
     private Map<Character, Character> characterMap;
@@ -36,11 +35,11 @@ public class Rotor {
     public void setSpindle(Spindle spindle) {
         this.mySpindle = spindle;
     }
-    
+
     public void setRotorIndex(int i) {
         this.rotorIndex = i;
     }
-    
+
     public int getRotorIndex() {
         return this.rotorIndex;
     }
@@ -78,14 +77,14 @@ public class Rotor {
         buildReverseCharacterMap();
     }
     
-    private final void buildCharacterMap() {
+    private void buildCharacterMap() {
         // We don't have a zip method in Java8?
         for (int i = 0; i < cipherAlphabet.size(); i++) {
             characterMap.put(alphabet.get(i), cipherAlphabet.get(i));
         }
     }
     
-    private final void buildReverseCharacterMap() {
+    private void buildReverseCharacterMap() {
         // We don't have a zip method in Java8?
         for (int i = 0; i < alphabet.size(); i++) {
             reverseCharacterMap.put(cipherAlphabet.get(i), alphabet.get(i));

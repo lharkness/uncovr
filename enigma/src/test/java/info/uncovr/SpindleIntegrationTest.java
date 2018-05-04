@@ -1,21 +1,14 @@
 package info.uncovr;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.Before;
-
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.Mock;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.junit.Assert.assertThat;
 
 public class SpindleIntegrationTest {
     
@@ -31,8 +24,8 @@ public class SpindleIntegrationTest {
     @Test
     public void testThatSpindleDeciphersCorrectlyOneRotor() {
         
-        List<Character> initialAlphabet = 
-            new LinkedList<Character>(encipheredChars);
+        List<Character> initialAlphabet =
+                new LinkedList<>(encipheredChars);
         
         Rotor rotor = buildRotor(initialAlphabet);
         Spindle target = new Spindle();
