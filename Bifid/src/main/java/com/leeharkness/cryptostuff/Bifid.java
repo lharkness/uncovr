@@ -203,13 +203,39 @@ public class Bifid {
     }
 
     public static void main(String[] args) {
-        Bifid app = new Bifid("incipere", 'x', 5);
 
-        String cipherText = app.encrypt("attackatdawn");
-        System.out.println(cipherText);
-        cipherText = "adcdmqeotcbqeotolooinfqonqcoincricbmnbboqiadivgrtbztwpebztwtgxtfihwokrveiootolotskaqwyovs";
-        String plainText = app.decrypt(cipherText);
-        System.out.println(plainText);
+	// Usage Bifid <command> [text] [key] [period]
+
+	String command = args[0];
+
+	if (command.equalsIgnoreCase("test")) {
+		Bifid testApp = new Bifid("", 'x', -1);
+		String plainText = "thisisatestmessage";
+		System.out.println("Encrypting using no key and no period");
+		System.out.println(String.format("Encrypting: %s", plainText));
+		String cipherText = testApp.encrypt(plainText);
+		System.out.println(String.format("Ciphertext: %s", cipherText));
+		System.out.println("Decrypting");
+		String decryptedText = testApp.decrypt(cipherText);
+		System.out.println(String.format("Test passed: %b", decryptedText.equals(plainText)));
+	}
+	else {
+		String cipherText = args[1];
+		int period = 0;
+		String key = "";
+		if (args.length > 1) {
+			key = args[1];
+		}
+		if (args.length > 2) {
+			period = Integer.parseInt(args[2]);
+		}
+			
+        	Bifid app = new Bifid(key, 'x', period);
+
+        	cipherText = "adcdmqeotcbqeotolooinfqonqcoincricbmnbboqiadivgrtbztwpebztwtgxtfihwokrveiootolotskaqwyovs";
+        	String plainText = app.decrypt(cipherText);
+        	System.out.println(plainText);
+	}
     }
 
 
