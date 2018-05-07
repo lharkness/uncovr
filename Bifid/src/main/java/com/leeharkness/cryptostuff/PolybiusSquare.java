@@ -1,8 +1,7 @@
 package com.leeharkness.cryptostuff;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PolybiusSquare {
 
@@ -14,16 +13,9 @@ public class PolybiusSquare {
     public PolybiusSquare(String key, int squareSize) {
         this.squareSize = squareSize;
         polybiusSquare = new char[squareSize][squareSize];
-        // I suspect there's a better way to do this...
-        Set<Character> keyChars = new LinkedHashSet<>();
-        for (byte b : key.getBytes()) {
-            keyChars.add((char)b);
-        }
 
-        Set<Character> alphaChars = new LinkedHashSet<>();
-        for (byte b : alphabet.getBytes()) {
-            alphaChars.add((char)b);
-        }
+        Set<Character> keyChars = key.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
+        Set<Character> alphaChars = alphabet.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
 
         Iterator<Character> keyIter = keyChars.iterator();
         Iterator<Character> alphaIter = alphaChars.iterator();
@@ -31,7 +23,7 @@ public class PolybiusSquare {
         int i = 0;
         int j = 0;
 
-        while (i < 5) {
+        while (i < squareSize) {
             if (keyIter.hasNext()) {
                 polybiusSquare[i][j] = keyIter.next();
                 j++;
@@ -57,7 +49,7 @@ public class PolybiusSquare {
     public char[][] getPolybiusSquare() {
         char[][] defensiveCopy = new char[squareSize][squareSize];
         for (int i = 0; i < squareSize; i++) {
-            for (int j = 0; i < squareSize; j++) {
+            for (int j = 0; j < squareSize; j++) {
                 defensiveCopy[i][j] = polybiusSquare[i][j];
             }
         }
@@ -103,6 +95,21 @@ public class PolybiusSquare {
         @Override
         public String toString() {
             return "row: " + row + " col: " + col;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof RowColumnPair)) return false;
+            RowColumnPair that = (RowColumnPair) o;
+            return row == that.row &&
+                    col == that.col;
+        }
+
+        @Override
+        public int hashCode() {
+
+            return Objects.hash(row, col);
         }
     }
 }

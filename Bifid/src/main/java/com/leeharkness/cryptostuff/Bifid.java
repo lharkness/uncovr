@@ -9,7 +9,8 @@ import java.util.List;
 public class Bifid {
 
     // The size of the Polybius square used
-    @SuppressWarnings("FieldCanBeLocal") private final int SQUARE_SIZE = 5;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final int SQUARE_SIZE = 5;
 
     private PolybiusSquare square;
 
@@ -18,11 +19,12 @@ public class Bifid {
 
     /**
      * Initialization ctor
-     * @param key The key to use
+     *
+     * @param key     The key to use
      * @param padChar the pad character to use for odd-length plaintext
-     * @param period the period to use for fractionating
+     * @param period  the period to use for fractionating
      */
-    public Bifid(String key, char padChar, int period) {
+    Bifid(String key, char padChar, int period) {
         square = new PolybiusSquare(key, SQUARE_SIZE);
         this.padChar = padChar;
         this.period = period;
@@ -30,10 +32,11 @@ public class Bifid {
 
     /**
      * Encrypts the input
+     *
      * @param input the text to encrypt
      * @return the encrypted text
      */
-    public String encrypt(String input) {
+    String encrypt(String input) {
 
         String plainText = input;
 
@@ -51,7 +54,7 @@ public class Bifid {
 
         // Get the row/column pairs for each letter in the plaintext - removing everything except letters
         for (byte b : plainText.replaceAll("[^a-zA-Z]", "").toLowerCase().getBytes()) {
-            rowColumnPairs.add(square.getPairFor((char)b));
+            rowColumnPairs.add(square.getPairFor((char) b));
         }
 
         // If we don't have a period then use the whole string
@@ -98,7 +101,7 @@ public class Bifid {
         // (not strictly required as we have a getCharAt(row, col), but I thought it was more readable
         for (int i = 0; i < encipheredNumbers.size() - 1; i += 2) {
             encipheredRowColumnPairs.add(new PolybiusSquare.RowColumnPair(encipheredNumbers.get(i),
-                                                                          encipheredNumbers.get(i + 1)));
+                    encipheredNumbers.get(i + 1)));
         }
 
         // Create our ciphertext
@@ -113,10 +116,11 @@ public class Bifid {
 
     /**
      * Decrypts ciphertext
+     *
      * @param input the ciphertext
      * @return the plaintext
      */
-    public String decrypt(String input) {
+    String decrypt(String input) {
 
         List<PolybiusSquare.RowColumnPair> rowColumnPairs = new ArrayList<>();
         List<Character> plainTextList = new ArrayList<>();
@@ -126,7 +130,7 @@ public class Bifid {
 
         // Go get our ciphertext numbers
         for (byte b : input.getBytes()) {
-            rowColumnPairs.add(square.getPairFor((char)b));
+            rowColumnPairs.add(square.getPairFor((char) b));
         }
 
 
@@ -188,7 +192,7 @@ public class Bifid {
             // Create RowCol pairs (not strictly required, but I think it reads better)
             for (int i = 0; i < rearrangedNumbers.size() - 1; i += 2) {
                 decipheredRowColumnPairs.add(new PolybiusSquare.RowColumnPair(rearrangedNumbers.get(i),
-                                                                              rearrangedNumbers.get(i + 1)));
+                        rearrangedNumbers.get(i + 1)));
             }
 
             for (PolybiusSquare.RowColumnPair rowColumnPair : decipheredRowColumnPairs) {
@@ -204,40 +208,64 @@ public class Bifid {
 
     public static void main(String[] args) {
 
-	// Usage Bifid <command> [text] [key] [period]
+        // Usage Bifid <command> [text] [key] [period]
 
-	String command = args[0];
+        String command = args[0];
 
-	if (command.equalsIgnoreCase("test")) {
-		Bifid testApp = new Bifid("", 'x', -1);
-		String plainText = "thisisatestmessage";
-		System.out.println("Encrypting using no key and no period");
-		System.out.println(String.format("Encrypting: %s", plainText));
-		String cipherText = testApp.encrypt(plainText);
-		System.out.println(String.format("Ciphertext: %s", cipherText));
-		System.out.println("Decrypting");
-		String decryptedText = testApp.decrypt(cipherText);
-		System.out.println(String.format("Test passed: %b", decryptedText.equals(plainText)));
-	}
-	else {
-		String cipherText = args[1];
-		int period = 0;
-		String key = "";
-		if (args.length > 1) {
-			key = args[1];
-		}
-		if (args.length > 2) {
-			period = Integer.parseInt(args[2]);
-		}
-			
-        	Bifid app = new Bifid(key, 'x', period);
+        if (command.equalsIgnoreCase("test")) {
+            Bifid testApp = new Bifid("", 'x', -1);
+            String plainText = "thisisatestmessage";
+            System.out.println("Encrypting using no key and no period");
+            System.out.println(String.format("Encrypting: %s", plainText));
+            String cipherText = testApp.encrypt(plainText);
+            System.out.println(String.format("Ciphertext: %s", cipherText));
+            System.out.println("Decrypting");
+            String decryptedText = testApp.decrypt(cipherText);
+            System.out.println(String.format("Test passed: %b", decryptedText.equals(plainText)));
 
-        	cipherText = "adcdmqeotcbqeotolooinfqonqcoincricbmnbboqiadivgrtbztwpebztwtgxtfihwokrveiootolotskaqwyovs";
-        	String plainText = app.decrypt(cipherText);
-        	System.out.println(plainText);
-	}
+            plainText = "thisisanothertestmessage";
+            testApp = new Bifid("short", 'x', -1);
+            System.out.println("Encrypting using short key and no period");
+            System.out.println(String.format("Encrypting: %s", plainText));
+            cipherText = testApp.encrypt(plainText);
+            System.out.println(String.format("Ciphertext: %s", cipherText));
+            System.out.println("Decrypting");
+            decryptedText = testApp.decrypt(cipherText);
+            System.out.println(String.format("Test passed: %b", decryptedText.equals(plainText)));
+
+            plainText = "thisisanothertestmessagetodecrypt";
+            testApp = new Bifid("short", 'x', 5);
+            System.out.println("Encrypting using short key and a period of 5");
+            System.out.println(String.format("Encrypting: %s", plainText));
+            cipherText = testApp.encrypt(plainText);
+            System.out.println(String.format("Ciphertext: %s", cipherText));
+            System.out.println("Decrypting");
+            decryptedText = testApp.decrypt(cipherText);
+            System.out.println(String.format("Test passed: %b", decryptedText.equals(plainText + 'x')));
+        } else {
+            // command input text key
+            String inputText = args[1];
+            int period = -1;
+            String key = "";
+            if (args.length > 2) {
+                key = args[2];
+            }
+            if (args.length > 3) {
+                period = Integer.parseInt(args[3]);
+            }
+
+            Bifid app = new Bifid(key, 'x', period);
+
+            if (command.equalsIgnoreCase("encrypt")) {
+                System.out.println(app.encrypt(inputText));
+                System.exit(0);
+            }
+
+            if (command.equalsIgnoreCase("decrypt")) {
+                System.out.println(app.decrypt(inputText));
+                System.exit(0);
+            }
+
+        }
     }
-
-
-
 }
