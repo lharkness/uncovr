@@ -5,10 +5,12 @@ import java.util.List;
 
 /**
  * Implements the Bifid Cipher: http://practicalcryptography.com/ciphers/bifid-cipher/
+ * Usage: Bifid <test|encrypt|decrypt> [text] [key] [period]
  */
 public class Bifid {
 
     // The size of the Polybius square used
+    // TODO: make this configurable?
     @SuppressWarnings("FieldCanBeLocal")
     private final int SQUARE_SIZE = 5;
 
@@ -49,17 +51,20 @@ public class Bifid {
         List<PolybiusSquare.RowColumnPair> encipheredRowColumnPairs = new ArrayList<>();
         List<Character> cipherTextList = new ArrayList<>();
 
+        // List of lists to support periods (groups)
         List<List<Integer>> rows = new ArrayList<>();
         List<List<Integer>> cols = new ArrayList<>();
 
         // Get the row/column pairs for each letter in the plaintext - removing everything except letters
+        // TODO: perhaps leave un-encipherable characters in the ciphertext?
         for (byte b : plainText.replaceAll("[^a-zA-Z]", "").toLowerCase().getBytes()) {
             rowColumnPairs.add(square.getPairFor((char) b));
         }
 
+        int periodToUse = period;
         // If we don't have a period then use the whole string
         if (period == -1) {
-            period = rowColumnPairs.size();
+            periodToUse = rowColumnPairs.size();
         }
 
         int curIndex = 0;
@@ -67,7 +72,7 @@ public class Bifid {
         // Get all the row numbers, group them by period
         while (curIndex < rowColumnPairs.size()) {
             List<Integer> curGroup = new ArrayList<>();
-            for (int i = 0; i < period; i++) {
+            for (int i = 0; i < periodToUse; i++) {
                 if (curIndex < rowColumnPairs.size()) {
                     curGroup.add(rowColumnPairs.get(curIndex).row);
                     curIndex++;
@@ -80,7 +85,7 @@ public class Bifid {
         curIndex = 0;
         while (curIndex < rowColumnPairs.size()) {
             List<Integer> curGroup = new ArrayList<>();
-            for (int i = 0; i < period; i++) {
+            for (int i = 0; i < periodToUse; i++) {
                 if (curIndex < rowColumnPairs.size()) {
                     curGroup.add(rowColumnPairs.get(curIndex).col);
                     curIndex++;
@@ -133,10 +138,11 @@ public class Bifid {
             rowColumnPairs.add(square.getPairFor((char) b));
         }
 
+        int periodToUse = period;
 
         // if we don't have a period use the whole thing
         if (period == -1) {
-            period = rowColumnPairs.size();
+            periodToUse = rowColumnPairs.size();
         }
 
         int curIndex = 0;
@@ -144,7 +150,7 @@ public class Bifid {
         // Go get our rows, grouped into period-sized chunks
         while (curIndex < rowColumnPairs.size()) {
             List<Integer> curGroup = new ArrayList<>();
-            for (int i = 0; i < period; i++) {
+            for (int i = 0; i < periodToUse; i++) {
                 if (curIndex < rowColumnPairs.size()) {
                     curGroup.add(rowColumnPairs.get(curIndex).row);
                     curIndex++;
@@ -157,7 +163,7 @@ public class Bifid {
         curIndex = 0;
         while (curIndex < rowColumnPairs.size()) {
             List<Integer> curGroup = new ArrayList<>();
-            for (int i = 0; i < period; i++) {
+            for (int i = 0; i < periodToUse; i++) {
                 if (curIndex < rowColumnPairs.size()) {
                     curGroup.add(rowColumnPairs.get(curIndex).col);
                     curIndex++;

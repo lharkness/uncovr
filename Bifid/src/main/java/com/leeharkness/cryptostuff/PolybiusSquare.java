@@ -3,14 +3,15 @@ package com.leeharkness.cryptostuff;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PolybiusSquare {
+class PolybiusSquare {
 
     private int squareSize;
-    char[][] polybiusSquare;
+    private char[][] polybiusSquare;
 
-    String alphabet = "abcdefghiklmnopqrstuvwxyz";
+    @SuppressWarnings("FieldCanBeLocal")
+    private String alphabet = "abcdefghiklmnopqrstuvwxyz";
 
-    public PolybiusSquare(String key, int squareSize) {
+    PolybiusSquare(String key, int squareSize) {
         this.squareSize = squareSize;
         polybiusSquare = new char[squareSize][squareSize];
 
@@ -46,18 +47,16 @@ public class PolybiusSquare {
         }
     }
 
-    public char[][] getPolybiusSquare() {
+    char[][] getPolybiusSquare() {
         char[][] defensiveCopy = new char[squareSize][squareSize];
         for (int i = 0; i < squareSize; i++) {
-            for (int j = 0; j < squareSize; j++) {
-                defensiveCopy[i][j] = polybiusSquare[i][j];
-            }
+            System.arraycopy(polybiusSquare[i], 0, defensiveCopy[i], 0, squareSize);
         }
 
         return defensiveCopy;
     }
 
-    public RowColumnPair getPairFor(char c) {
+    RowColumnPair getPairFor(char c) {
         RowColumnPair pair = new RowColumnPair();
         for (int i = 0; i < squareSize; i++) {
             for (int j = 0; j < squareSize; j++) {
@@ -72,11 +71,11 @@ public class PolybiusSquare {
         return pair;
     }
 
-    public char getCharAt(int row, int col) {
+    char getCharAt(int row, int col) {
         return polybiusSquare[row][col];
     }
 
-    public char getCharAt(RowColumnPair rowColumnPair) {
+    char getCharAt(RowColumnPair rowColumnPair) {
         return getCharAt(rowColumnPair.row, rowColumnPair.col);
     }
 
@@ -85,9 +84,9 @@ public class PolybiusSquare {
         int row = -1;
         int col = -1;
 
-        public RowColumnPair() {}
+        RowColumnPair() {}
 
-        public RowColumnPair(int row, int col) {
+        RowColumnPair(int row, int col) {
             this.row = row;
             this.col = col;
         }
