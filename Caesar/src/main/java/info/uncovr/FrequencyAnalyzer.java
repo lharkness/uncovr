@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class FrequencyAnalyzer {
     
-    private Map<Character, Integer> frequencyMap = new HashMap<>();
+    private final Map<Character, Integer> frequencyMap = new HashMap<>();
     private int dataLength;
     
     /**
@@ -26,7 +26,7 @@ public class FrequencyAnalyzer {
     
     /**
      * grab a single character and add it to the analysis
-     * @param c the character to anlyze
+     * @param c the character to analyze
      * @return this instance
      */
     public FrequencyAnalyzer consume(char c) {
@@ -59,6 +59,13 @@ public class FrequencyAnalyzer {
             .map(item -> item.calculateFrequency(dataLength))
             .collect(Collectors.toList());
     
+    }
+
+    public LetterFrequency getFrequencyFor(char c) {
+        if (!frequencyMap.containsKey(c)) {
+            return new LetterFrequency(c, 0);
+        }
+        return new LetterFrequency(c, frequencyMap.get(c));
     }
     
 }

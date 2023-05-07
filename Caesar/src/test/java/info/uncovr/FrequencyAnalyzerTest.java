@@ -42,4 +42,16 @@ public class FrequencyAnalyzerTest {
             index++;
         }
     }
+
+    @Test
+    public void testThatConsumeIsChained() {
+        FrequencyAnalyzer target = new FrequencyAnalyzer().consume('a').consume('z');
+
+        assertThat(target.getFrequencies().size(), is(2));
+        for (LetterFrequency item : target.getFrequencies()) {
+            assertThat(item.getFrequency(), is((double)1/2));
+        }
+        assertThat(target.getFrequencies().stream().filter(i -> i.getLetter() == 'a').findAny().isEmpty(), is(false));
+        assertThat(target.getFrequencies().stream().filter(i -> i.getLetter() == 'z').findAny().isEmpty(), is(false));
+    }
 }

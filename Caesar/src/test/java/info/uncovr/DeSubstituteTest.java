@@ -19,10 +19,12 @@ public class DeSubstituteTest {
     "wherein. Own greater Bearing. Open you his rule isn't firmament.";
     
     @Test
-    public void testThatDeRotCanDecrypt() {
+    public void testThatDeSubstituteCanDecrypt() {
         
         String ciphertext = Rot.modify(plaintext, 13);
         String decryptedText = DeSubstitute.decrypt(ciphertext);
+
+        System.out.println(decryptedText);
         
         int numberRight = 0;
         
